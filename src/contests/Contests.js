@@ -6,6 +6,9 @@ import client from "../client";
 import Footer from "../utils/Footer";
 import Loading from "../utils/Loading";
 import IsolatedModal from "./IsolatedModal";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat.js";
+dayjs.extend(localizedFormat);
 
 const OAUTH_LOGIN = `${process.env.REACT_APP_CONTESTS_API}/oauth/twitch?redirect=contests`;
 
@@ -22,7 +25,7 @@ export default function Contests(props) {
         .find({
           query: {
             $sort: {
-              id: 1,
+              createdAt: -1,
             },
           },
         })
@@ -81,7 +84,11 @@ export default function Contests(props) {
                   return (
                     <Paper key={data.id} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: 4, mt: 2 }}>
                       <Box>
-                        <Typography variant="body2" color="textSecondary">{`${new Date(data.createdAt).toLocaleDateString()}`}</Typography>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Typography variant="body2" color="textSecondary" sx={{ whiteSpace: "pre-wrap" }}>{`Status: `}</Typography>
+                          <Typography variant="body2" color={`${data.active ? "red" : "textSecondary"}`}>{`${data.active ? "Active" : "Inactive"}`}</Typography>
+                        </Box>
+                        <Typography variant="body2" color="textSecondary">{`${dayjs(data.createdAt).format("LL")}`}</Typography>
                         <Typography variant="h6" sx={{ textTransform: "uppercase" }} color="primary">{`${data.type} Contest`}</Typography>
                         <Typography variant="h5" sx={{ textTransform: "uppercase", mt: 2 }}>{`${data.title}`}</Typography>
                         <Typography variant="h6" sx={{ textTransform: "uppercase", mt: 2 }} color="primary">{`${data.submissions.length} Submissions`}</Typography>
