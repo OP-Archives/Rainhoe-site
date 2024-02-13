@@ -7,6 +7,7 @@ import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import ReportIcon from "@mui/icons-material/Report";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 const socials = [
   {
@@ -82,6 +83,16 @@ export default function Navbar(props) {
                     <OndemandVideoIcon color="primary" sx={{ mr: 0.5 }} />
                     <Typography color="primary" variant="h6">
                       Vods
+                    </Typography>
+                  </Box>
+                </CustomLink>
+              </Box>
+              <Box sx={{ mr: 2 }}>
+                <CustomLink href="/contests">
+                  <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <EmojiEventsIcon color="primary" sx={{ mr: 0.5 }} />
+                    <Typography color="primary" variant="h6">
+                      Contests
                     </Typography>
                   </Box>
                 </CustomLink>

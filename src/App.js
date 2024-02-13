@@ -2,8 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider, responsiveFontSizes } from "@mui/material/styles";
 import { CssBaseline, styled } from "@mui/material";
 import { purple } from "@mui/material/colors";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import Loading from "./utils/Loading";
+import client from "./client";
 
 const Vods = lazy(() => import("./vods/Vods"));
 const Navbar = lazy(() => import("./navbar/navbar"));
@@ -11,12 +12,17 @@ const YoutubeVod = lazy(() => import("./vods/YoutubeVod"));
 const Games = lazy(() => import("./games/Games"));
 const CustomVod = lazy(() => import("./vods/CustomVod"));
 const NotFound = lazy(() => import("./utils/NotFound"));
+const Contests = lazy(() => import("./contests/Contests"));
+const Manage = lazy(() => import("./contests/manage"));
+const Winners = lazy(() => import("./contests/winners"));
 
 const channel = process.env.REACT_APP_CHANNEL,
   twitchId = process.env.REACT_APP_TWITCH_ID,
   ARCHIVE_API_BASE = process.env.REACT_APP_VODS_API_BASE;
 
 export default function App() {
+  const [user, setUser] = useState(undefined);
+
   let darkTheme = createTheme({
     palette: {
       mode: "dark",
@@ -43,6 +49,20 @@ export default function App() {
   });
 
   darkTheme = responsiveFontSizes(darkTheme);
+
+  useEffect(() => {
+    client.authenticate().catch(() => setUser(null));
+
+    client.on("authenticated", (paramUser) => {
+      setUser(paramUser.user);
+    });
+
+    client.on("logout", () => {
+      setUser(null);
+    });
+
+    return;
+  }, []);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -77,6 +97,36 @@ export default function App() {
               <Route exact path="/youtube/:vodId" element={<YoutubeVod channel={channel} twitchId={twitchId} ARCHIVE_API_BASE={ARCHIVE_API_BASE} />} />
               <Route exact path="/games/:vodId" element={<Games channel={channel} twitchId={twitchId} ARCHIVE_API_BASE={ARCHIVE_API_BASE} />} />
               <Route exact path="/manual/:vodId" element={<CustomVod channel={channel} twitchId={twitchId} type="manual" ARCHIVE_API_BASE={ARCHIVE_API_BASE} />} />
+              <Route
+                exact
+                path="/contests"
+                element={
+                  <>
+                    <Navbar channel={channel} />
+                    <Contests user={user} channel={channel} />
+                  </>
+                }
+              />
+              <Route
+                exact
+                path="/contests/:contestId/manage"
+                element={
+                  <>
+                    <Navbar channel={channel} />
+                    <Manage user={user} channel={channel} />
+                  </>
+                }
+              />
+              <Route
+                exact
+                path="/contests/:contestId/winners"
+                element={
+                  <>
+                    <Navbar channel={channel} />
+                    <Winners user={user} channel={channel} />
+                  </>
+                }
+              />
             </Routes>
           </Suspense>
         </Parent>
