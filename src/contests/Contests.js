@@ -47,7 +47,7 @@ export default function Contests(props) {
                   <img style={{ height: "auto" }} src={logo} alt="" />
                   <Box sx={{ mt: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
                     <Typography variant="h3" fontWeight={600} color="primary">
-                      Rainhoe Contests
+                      {`${channel} Contests`}
                     </Typography>
                   </Box>
                   <Box sx={{ mt: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
