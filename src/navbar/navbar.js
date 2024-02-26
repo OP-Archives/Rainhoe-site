@@ -20,6 +20,10 @@ const socials = [
     icon: <YouTubeIcon color="primary" />,
   },
   {
+    path: `https://www.youtube.com/@rainvod`,
+    icon: <YouTubeIcon color="primary" />,
+  },
+  {
     path: `https://discord.gg/nyzrmdb`,
     icon: (
       <SvgIcon viewBox="0 0 71 55" color="primary">
