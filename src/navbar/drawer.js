@@ -5,11 +5,13 @@ import HomeIcon from "@mui/icons-material/Home";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import ReportIcon from "@mui/icons-material/Report";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import StoreIcon from "@mui/icons-material/Store";
 
 const mainLinks = [
   { title: `Home`, path: `/`, icon: <HomeIcon color="primary" /> },
   { title: `Vods`, path: `/vods`, icon: <OndemandVideoIcon color="primary" /> },
   { title: `Contests`, path: `/contests`, icon: <EmojiEventsIcon color="primary" /> },
+  { title: `Merch`, path: `https://uwumarket.us/collections/rainhoe`, icon: <StoreIcon color="primary" /> },
   { title: `Issues`, path: `${process.env.REACT_APP_GITHUB}/issues`, icon: <ReportIcon color="primary" /> },
 ];
 
