@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { styled, IconButton } from "@mui/material";
 
 const ExpandMore = styled(({ expand, ...props }, ref) => <IconButton {...props} />)`
